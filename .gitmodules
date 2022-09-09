@@ -1,0 +1,3 @@
+[submodule "BabylonNative"]
+	path = BabylonNative
+	url = https://github.com/BabylonJS/BabylonNative.git
