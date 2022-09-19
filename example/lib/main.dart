@@ -3,6 +3,9 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:babylonnative/babylonnative.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,15 +52,73 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    // This is used in the platform side to register the view.
+	  const String viewType = 'BabylonNative';
+	  // Pass parameters to the platform side.
+	  const Map<String, dynamic> creationParams = <String, dynamic>{};
+
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Flutter BabylonNative'),
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
+        body: PlatformViewLink(
+		viewType: viewType,
+		surfaceFactory:
+			(context, controller) {
+		  return AndroidViewSurface(
+			controller: controller as AndroidViewController,
+			gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
+			hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+		  );
+		},
+		onCreatePlatformView: (params) {
+		  return PlatformViewsService.initSurfaceAndroidView(
+			id: params.id,
+			viewType: viewType,
+			layoutDirection: TextDirection.ltr,
+			creationParams: creationParams,
+			creationParamsCodec: const StandardMessageCodec(),
+			onFocus: () {
+			  params.onFocusChanged(true);
+			},
+		  )
+			..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
+			..create();
+		},
+	  ),
       ),
     );
   }
+  /*
+  Widget build(BuildContext context) {
+	  
+
+	  return PlatformViewLink(
+		viewType: viewType,
+		surfaceFactory:
+			(context, controller) {
+		  return AndroidViewSurface(
+			controller: controller as AndroidViewController,
+			gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
+			hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+		  );
+		},
+		onCreatePlatformView: (params) {
+		  return PlatformViewsService.initSurfaceAndroidView(
+			id: params.id,
+			viewType: viewType,
+			layoutDirection: TextDirection.ltr,
+			creationParams: creationParams,
+			creationParamsCodec: const StandardMessageCodec(),
+			onFocus: () {
+			  params.onFocusChanged(true);
+			},
+		  )
+			..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
+			..create();
+		},
+	  );
+	}*/
 }

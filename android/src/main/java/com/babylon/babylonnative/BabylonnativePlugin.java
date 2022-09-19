@@ -20,6 +20,8 @@ public class BabylonnativePlugin implements FlutterPlugin, MethodCallHandler {
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
     channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "babylonnative");
     channel.setMethodCallHandler(this);
+
+    flutterPluginBinding.getPlatformViewRegistry().registerViewFactory("BabylonNative", new NativeViewFactory());
   }
 
   @Override
