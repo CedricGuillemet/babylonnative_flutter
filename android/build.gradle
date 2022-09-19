@@ -4,7 +4,7 @@ version '1.0'
 
 def jsEngineBaseDir = "${buildDir}/JS"
 def jsEngineIncDir = "${jsEngineBaseDir}/include/V8"
-def jsEngineLibDir = "${rootDir}/app/src/main/jniLibs"
+def jsEngineLibDir = "${projectDir}/app/src/main/jniLibs"
 
 def jsEngineLibName = "v8android"
 if (project.hasProperty("JSEngine")) {
@@ -55,6 +55,8 @@ android {
     compileSdkVersion 31
 
     defaultConfig {
+        minSdkVersion "${platformVersion}"
+        targetSdkVersion 28
         externalNativeBuild {
             cmake {
                 abiFilters "arm64-v8a", "armeabi-v7a", "x86", "x86_64"
@@ -67,6 +69,9 @@ android {
                     "-DANDROID_JSENGINE_INCPATH=${jsEngineIncDir}",
                     "-DCMAKE_UNITY_BUILD=${unity_build}"
             }
+        }
+        ndk {
+            abiFilters "arm64-v8a"
         }
     }
 
@@ -85,38 +90,21 @@ android {
             path 'CMakeLists.txt'
         }
     }
+    
+    packagingOptions {
+        pickFirst 'lib/*/libv8android.so'
+        pickFirst 'lib/*/libjsc.so'
+    }
 }
 
 
 dependencies {
     // ARCore library
-    implementation 'com.google.ar:core:1.14.0'
-    natives 'com.google.ar:core:1.14.0'
+    //implementation 'com.google.ar:core:1.14.0'
+    //natives 'com.google.ar:core:1.14.0'
 
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
-}
-
-// Extracts the shared libraries from aars in the natives configuration.
-// This is done so that NDK builds can access these libraries.
-task extractNativeLibraries() {
-    // Always extract, this insures the native libs are updated if the version changes.
-    outputs.upToDateWhen { false }
-    doFirst {
-        configurations.natives.files.each { f ->
-            copy {
-                from zipTree(f)
-                into arcore_libpath
-                include "jni/**/*"
-            }
-        }
-    }
-}
-
-tasks.whenTaskAdded { task ->
-    if (task.name.contains("external") && !task.name.contains("Clean")) {
-        task.dependsOn(extractNativeLibraries)
-    }
 }
 
 task copyFiles {
@@ -162,11 +150,11 @@ repositories {
     mavenLocal()
     maven {
         // Android JSC is installed from npm
-        url "$rootDir/../BabylonNative/Apps/node_modules/jsc-android/dist"
+        url "$projectDir/../BabylonNative/Apps/node_modules/jsc-android/dist"
     }
     maven {
         // Android V8 is installed from npm
-        url "$rootDir/../BabylonNative/Apps/node_modules/v8-android/dist"
+        url "$projectDir/../BabylonNative/Apps/node_modules/v8-android/dist"
     }
     google()
     jcenter()
@@ -219,13 +207,13 @@ tasks.whenTaskAdded { task ->
 task copyFilesJSHeaders {
     copy
     {
-        from "${rootDir}/../BabylonNative/Apps/node_modules/jsc-android/dist/include"
+        from "${projectDir}/../BabylonNative/Apps/node_modules/jsc-android/dist/include"
         include "*"
         into "${jsEngineBaseDir}/include/JavaScriptCore"
     }
     copy
     {
-        from "${rootDir}/../BabylonNative/Apps/node_modules/v8-android/dist/include"
+        from "${projectDir}/../BabylonNative/Apps/node_modules/v8-android/dist/include"
         include "**/*"
         into "${jsEngineIncDir}"
     }
