@@ -3,12 +3,26 @@ on:
   pull_request:
     branches:
       - master
-      
+
+env:
+  CMAKE_VERSION: 3.19.6
+
 jobs:
   build:
     # This job will run on ubuntu virtual machine
     runs-on: ubuntu-latest
     steps:
+    
+    - name: CMake install
+      run: |
+        wget https://github.com/Kitware/CMake/releases/download/v${{ env.BRN_Version }}/cmake-${{ env.BRN_Version }}-Linux-x86_64.sh
+        sudo mkdir -p /opt/cmake/cmake-${{ env.BRN_Version }}-linux-x86_64
+        sudo sh cmake-${{ env.BRN_Version }}-Linux-x86_64.sh --prefix=/opt/cmake/cmake-${{ env.BRN_Version }}-linux-x86_64 --skip-license
+        sudo rm /usr/local/bin/cmake
+        sudo ln -s /opt/cmake/cmake-${{ env.BRN_Version }}-linux-x86_64/bin/cmake /usr/local/bin/cmake
+        sudo apt-get update
+        sudo apt-get install ninja-build
+        cmake --version
     
     # recursive checkout
     - name: Checkout
