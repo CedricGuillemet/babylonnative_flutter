@@ -34,8 +34,8 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      platformVersion =
-          await _babylonnativePlugin.getPlatformVersion() ?? 'Unknown platform version';
+      platformVersion = await _babylonnativePlugin.getPlatformVersion() ??
+          'Unknown platform version';
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -53,10 +53,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     // This is used in the platform side to register the view.
-	  const String viewType = 'BabylonNative';
-	  // Pass parameters to the platform side.
-	  const Map<String, dynamic> creationParams = <String, dynamic>{};
-
+    const String viewType = 'BabylonNative';
+    // Pass parameters to the platform side.
+    const Map<String, dynamic> creationParams = <String, dynamic>{};
 
     return MaterialApp(
       home: Scaffold(
@@ -64,30 +63,30 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Flutter BabylonNative'),
         ),
         body: PlatformViewLink(
-		viewType: viewType,
-		surfaceFactory:
-			(context, controller) {
-		  return AndroidViewSurface(
-			controller: controller as AndroidViewController,
-			gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
-			hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-		  );
-		},
-		onCreatePlatformView: (params) {
-		  return PlatformViewsService.initSurfaceAndroidView(
-			id: params.id,
-			viewType: viewType,
-			layoutDirection: TextDirection.ltr,
-			creationParams: creationParams,
-			creationParamsCodec: const StandardMessageCodec(),
-			onFocus: () {
-			  params.onFocusChanged(true);
-			},
-		  )
-			..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
-			..create();
-		},
-	  ),
+          viewType: viewType,
+          surfaceFactory: (context, controller) {
+            return AndroidViewSurface(
+              controller: controller as AndroidViewController,
+              gestureRecognizers: const <
+                  Factory<OneSequenceGestureRecognizer>>{},
+              hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+            );
+          },
+          onCreatePlatformView: (params) {
+            return PlatformViewsService.initSurfaceAndroidView(
+              id: params.id,
+              viewType: viewType,
+              layoutDirection: TextDirection.ltr,
+              creationParams: creationParams,
+              creationParamsCodec: const StandardMessageCodec(),
+              onFocus: () {
+                params.onFocusChanged(true);
+              },
+            )
+              ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
+              ..create();
+          },
+        ),
       ),
     );
   }
