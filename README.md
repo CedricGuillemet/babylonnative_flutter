@@ -1,6 +1,6 @@
 # Babylon Native Flutter plugin
 
-![Babylon Native Flutter plugin](assets/images/screenshot001.jpg)
+<img src="assets/images/screenshot001.jpg" width="512" height="1138">
 
 https://github.com/BabylonJS/BabylonNative
 
