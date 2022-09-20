@@ -1,7 +1,7 @@
 name: babylonnative
 description: Brings Babylon.js 3D engine to your Flutter app
 version: 0.0.1
-homepage:
+homepage: https://github.com/CedricGuillemet/babylonnative_flutter
 
 environment:
   sdk: '>=2.18.0 <3.0.0'
