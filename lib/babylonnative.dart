@@ -1,4 +1,3 @@
-
 import 'babylonnative_platform_interface.dart';
 
 class Babylonnative {
