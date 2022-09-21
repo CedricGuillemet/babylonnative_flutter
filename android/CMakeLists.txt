@@ -56,7 +56,7 @@ target_link_libraries(BabylonNativeJNI
         AppRuntime
         NativeEngine
         NativeInput
-        NativeXr
+        #NativeXr
         NativeOptimizations
         Console
         Canvas

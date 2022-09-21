@@ -15,7 +15,7 @@
 #include <Babylon/ScriptLoader.h>
 #include <Babylon/Plugins/NativeEngine.h>
 #include <Babylon/Plugins/NativeInput.h>
-#include <Babylon/Plugins/NativeXr.h>
+//#include <Babylon/Plugins/NativeXr.h>
 #include <Babylon/Plugins/NativeCamera.h>
 #include <Babylon/Plugins/NativeOptimizations.h>
 #include <Babylon/Plugins/ChromeDevTools.h>
@@ -32,7 +32,7 @@ namespace
     std::unique_ptr<Babylon::Plugins::ChromeDevTools> g_chromeDevTools{};
     Babylon::Plugins::NativeInput* g_nativeInput{};
     std::unique_ptr<Babylon::ScriptLoader> g_scriptLoader{};
-    std::optional<Babylon::Plugins::NativeXr> g_nativeXr{};
+    //std::optional<Babylon::Plugins::NativeXr> g_nativeXr{};
     std::unique_ptr<Babylon::Polyfills::Canvas> nativeCanvas{};
     bool g_isXrActive{};
 }
@@ -54,7 +54,7 @@ extern "C"
         }
 
         g_chromeDevTools.reset();
-        g_nativeXr.reset();
+        //g_nativeXr.reset();
         g_scriptLoader.reset();
         g_nativeInput = {};
         g_runtime.reset();
@@ -114,8 +114,8 @@ extern "C"
                 Babylon::Plugins::NativeEngine::Initialize(env);
                 Babylon::Plugins::NativeOptimizations::Initialize(env);
 
-                g_nativeXr.emplace(Babylon::Plugins::NativeXr::Initialize(env));
-                g_nativeXr->SetSessionStateChangedCallback([](bool isXrActive){ g_isXrActive = isXrActive; });
+                //g_nativeXr.emplace(Babylon::Plugins::NativeXr::Initialize(env));
+                //g_nativeXr->SetSessionStateChangedCallback([](bool isXrActive){ g_isXrActive = isXrActive; });
                 
                 g_nativeInput = &Babylon::Plugins::NativeInput::CreateForJavaScript(env);
 
@@ -259,7 +259,7 @@ extern "C"
     JNIEXPORT void JNICALL
     Java_com_babylon_babylonnative_Wrapper_xrSurfaceChanged(JNIEnv* env, jclass clazz, jobject surface)
     {
-        if (g_nativeXr)
+        /*if (g_nativeXr)
         {
             ANativeWindow* window{};
             if (surface)
@@ -267,7 +267,7 @@ extern "C"
                 window = ANativeWindow_fromSurface(env, surface);
             }
             g_nativeXr->UpdateWindow(window);
-        }
+        }*/
     }
 
     JNIEXPORT jboolean JNICALL

@@ -182,7 +182,7 @@ task extractJSEngineLibraries() {
     } else {
         jsconfig = configurations.v8Android
     }
-    doFirst {
+    //doFirst {
         jsconfig.files.each { f ->
             copy {
                 from zipTree(f)
@@ -195,7 +195,7 @@ task extractJSEngineLibraries() {
                 includeEmptyDirs = false
             }
         }
-    }
+    //}
 }
 
 tasks.whenTaskAdded { task ->
