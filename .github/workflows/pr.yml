@@ -13,7 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
-    # ninja/cmake/gradle bug https://github.com/google/filament/discussions/5337
     - name: CMake install
       run: |
         wget https://github.com/Kitware/CMake/releases/download/v${{ env.CMAKE_VERSION }}/cmake-${{ env.CMAKE_VERSION }}-Linux-x86_64.sh
@@ -23,8 +22,6 @@ jobs:
         sudo ln -s /opt/cmake/cmake-${{ env.CMAKE_VERSION }}-linux-x86_64/bin/cmake /usr/local/bin/cmake
         sudo apt-get update
         sudo apt-get install ninja-build
-        sudo ln -s /usr/bin/ninja-build /opt/cmake/cmake-${{ env.CMAKE_VERSION }}-linux-x86_64/bin/ninja
-        sudo ln -s /usr/bin/ninja-build /opt/cmake/cmake-${{ env.CMAKE_VERSION }}-linux-x86_64/bin/ninja-buiild
         cmake --version
     
     # recursive checkout
