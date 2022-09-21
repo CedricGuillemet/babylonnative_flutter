@@ -20,9 +20,9 @@ Thhis plugin is a work in progress, non production-ready. PRs are welcome.
 - [ ] Linux port
 - [ ] On ready state exposed with a callback
 - [ ] Ability to load/run a script URL or a code snipppet from Dart
-- [ ] CI build / Github Action
+- [x] CI build / Github Action
 - [ ] CI publish / Github Action
-- [ ] Fix local builds
+- [x] Fix local builds
 
 ## Getting Started
 
@@ -34,3 +34,24 @@ Android and/or iOS.
 For help getting started with Flutter development, view the
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Building
+
+Clone repo with submodules
+```
+git clone --recursive https://github.com/CedricGuillemet/babylonnative_flutter.git
+```
+
+Install node modules
+
+```
+cd babylonnative_flutter/BabylonNative/Apps
+npm i
+```
+
+Build and run example
+
+```
+cd babylonnative_flutter/example
+flutter run
+```

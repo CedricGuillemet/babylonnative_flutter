@@ -140,7 +140,7 @@ task copyFiles {
     }
     copy
     {
-        from '../BabylonNative/Apps/Scripts'
+        from '../BabylonNative/Apps/Playground/Scripts'
         include "*.js"
         into 'src/main/assets/Scripts'
     }

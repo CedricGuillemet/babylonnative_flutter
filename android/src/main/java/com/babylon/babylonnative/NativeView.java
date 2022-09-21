@@ -57,9 +57,9 @@ class NativeView extends FrameLayout implements PlatformView, SurfaceHolder.Call
         //BabylonNative.Wrapper.setCurrentActivity(this.mCurrentActivity);
         if (!this.mViewReady) {
             //this.mViewDelegate.onViewReady();
-            //Wrapper.loadScript("app:///Scripts/experience.js");
-            Wrapper.loadScript("app:///Scripts/marble.js");
-            Wrapper.loadScript("app:///Scripts/playground_runner.js");
+            Wrapper.loadScript("app:///Scripts/experience.js");
+            //Wrapper.loadScript("app:///Scripts/marble.js");
+            //Wrapper.loadScript("app:///Scripts/playground_runner.js");
             this.mViewReady = true;
         }
     }
