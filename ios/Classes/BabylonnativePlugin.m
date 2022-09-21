@@ -7,6 +7,10 @@
             binaryMessenger:[registrar messenger]];
   BabylonnativePlugin* instance = [[BabylonnativePlugin alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
+
+  NativeViewFactory* factory =
+      [[NativeViewFactory alloc] initWithMessenger:registrar.messenger];
+  [registrar registerViewFactory:factory withId:@"BabylonNative"];
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
