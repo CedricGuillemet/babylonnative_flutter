@@ -38,11 +38,18 @@ set_target_properties(${PLUGIN_NAME} PROPERTIES
   CXX_VISIBILITY_PRESET hidden)
 target_compile_definitions(${PLUGIN_NAME} PRIVATE FLUTTER_PLUGIN_IMPL)
 
+# babylonnative
+# bgfx dirs or errors will pop out. idk why it's needed
+set(BGFX_DIR "${CMAKE_SOURCE_DIR}/../../BabylonNative/Dependencies/bgfx.cmake/bgfx")
+set(BX_DIR "${CMAKE_SOURCE_DIR}/../../BabylonNative/Dependencies/bgfx.cmake/bgfx")
+set(BIMG_DIR "${CMAKE_SOURCE_DIR}/../../BabylonNative/Dependencies/bgfx.cmake/bimg")
+add_subdirectory("${CMAKE_SOURCE_DIR}/../../BabylonNative" "${CMAKE_SOURCE_DIR}/../../BabylonNative/build")
+
 # Source include directories and library dependencies. Add any plugin-specific
 # dependencies here.
 target_include_directories(${PLUGIN_NAME} INTERFACE
   "${CMAKE_CURRENT_SOURCE_DIR}/include")
-target_link_libraries(${PLUGIN_NAME} PRIVATE flutter flutter_wrapper_plugin)
+target_link_libraries(${PLUGIN_NAME} PRIVATE flutter flutter_wrapper_plugin bgfx)
 
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list could contain prebuilt libraries, or libraries created by an
@@ -51,3 +58,4 @@ set(babylonnative_bundled_libraries
   ""
   PARENT_SCOPE
 )
+
