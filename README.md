@@ -10,7 +10,7 @@ This Flutter plugin brings all the Babylon Native technologies, ready to use, in
 
 ## Status
 
-Thhis plugin is a work in progress, non production-ready. PRs are welcome.
+This plugin is a work in progress, non production-ready. PRs are welcome.
 
 ## Todo
 - [x] Android PoC
